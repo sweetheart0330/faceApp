@@ -28,7 +28,7 @@ def createBox(img,points,scale=5,masked=False,cropped=True):
         return mask
 
 # взятие картинки для работы + припроцессинг
-img=cv2.imread('facegirl.jpg')
+img=cv2.imread('facegirlnew.jpg')
 img=cv2.resize(img,(0,0),None,0.5,0.5)
 imgOriginal=img.copy()
 
@@ -102,5 +102,5 @@ for face in faces:
 
     # print(myPoints)
 
-cv2.imshow("Original",imgOriginal)
+#cv2.imshow("Original",imgOriginal)
 cv2.waitKey(0)

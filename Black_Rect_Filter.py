@@ -3,6 +3,7 @@ import cv2
 face = cv2.CascadeClassifier('Datas/haarcascade_frontalface_default.xml')
 filename='facegirl.jpg'
 img=cv2.imread(filename)
+img=cv2.resize(img,(0,0),None,0.5,0.5)
 gray=cv2.cvtColor(img,cv2.COLOR_BGR2GRAY)
 rc=face.detectMultiScale(gray,1.09,7)
 rec=(cv2.imread('Filters/rect.png'))
