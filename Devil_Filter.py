@@ -1,37 +1,37 @@
 import cv2
 from PIL import Image as im
 
-def hat_filter(path):
+#
+def devil_filter(path):
 
     face = cv2.CascadeClassifier('Datas/haarcascade_frontalface_default.xml')
-    #filename='facegirlnew.jpg'
 
     img=cv2.imread(path)
     img=cv2.resize(img,(0,0),None,0.5,0.5)
     gray=cv2.cvtColor(img,cv2.COLOR_BGR2GRAY)
     # препроцессинг
     fl=face.detectMultiScale(gray,1.09,7)
-    hat=cv2.imread('Filters/hat.png')
+    dev=cv2.imread('Filters/devil.png')
 
 
     # функция для подгонки и размещения шляпы
-    def put_hat(hat, fc, x, y, w, h):
+    def put_dev(de, fc, x, y, w, h):
         face_width = w
         face_height = h
-        hat_width = face_width + 1
-        hat_height = int(0.50 * face_height) + 1
-        hat = cv2.resize(hat, (hat_width, hat_height))
+        dev_width = face_width + 1
+        dev_height = int(0.50 * face_height) + 1
+        de = cv2.resize(de, (dev_width, dev_height))
 
-        for i in range(hat_height):
-            for j in range(hat_width):
+        for i in range(dev_height):
+            for j in range(dev_width):
                 for k in range(3):
-                    if hat[i][j][k] < 235:
-                        fc[y + i - int(0.40 * face_height)][x + j][k] = hat[i][j][k]
+                    if de[i][j][k] < 235:
+                        fc[y + i - int(0.40 * face_height)][x + j][k] = de[i][j][k]
         return fc
     for (x, y, w, h) in fl:
-        frame = put_hat(hat, img, x, y, w, h)
+        frame = put_dev(dev, img, x, y, w, h)
 
-    cv2.imshow('Hat filter',frame)
+    cv2.imshow('Devil filter',frame)
     cv2.waitKey()
     cv2.destroyAllWindows()
     #cv2.imwrite('saved.jpg',frame)
