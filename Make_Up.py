@@ -3,7 +3,7 @@ import numpy as np
 import dlib
 # основа ии
 
-def make_up_filter(make_up_lips,make_up_eyes,FILTER,COLOR,path):
+def make_up_filter(make_up_lips, make_up_eyes, FILTER, COLORLIPS,COLOREYES, path):
     detector=dlib.get_frontal_face_detector()
     predictor=dlib.shape_predictor("Datas/shape_predictor_68_face_landmarks.dat")
 
@@ -11,7 +11,8 @@ def make_up_filter(make_up_lips,make_up_eyes,FILTER,COLOR,path):
     #make_up_lips=True
     #make_up_eyes=True
     #FILTER=True
-    #COLOR=[89, 236, 21]
+    #COLORLIPS=[89, 236, 21]
+    #COLOREYES=.....
 
     # создание маски и преобразование по заданным условиям
     def createBox(img,points,scale=5,masked=False,cropped=True):
@@ -68,7 +69,7 @@ def make_up_filter(make_up_lips,make_up_eyes,FILTER,COLOR,path):
 
             # окончательное слияние + окрашивание полигонов
             imgColorLips=np.zeros_like(imgLips)
-            imgColorLips[:]=COLOR # цвет полигона
+            imgColorLips[:]=COLORLIPS # цвет полигона
             imgColorLips=cv2.bitwise_and(imgLips,imgColorLips)
             imgColorLips=cv2.GaussianBlur(imgColorLips,(7,7),10)# блюр
 
@@ -87,8 +88,8 @@ def make_up_filter(make_up_lips,make_up_eyes,FILTER,COLOR,path):
             imgColorLeftEye = np.zeros_like(imgLeftEye)
             imgColorRightEye = np.zeros_like(imgRightEye)
 
-            imgColorLeftEye[:] = 153, 0, 157  # цвет полигона
-            imgColorRightEye[:] = 153, 0, 157
+            imgColorLeftEye[:] = COLOREYES  # цвет полигона
+            imgColorRightEye[:] = COLOREYES
             imgColorLeftEye = cv2.bitwise_and(imgLeftEye, imgColorLeftEye)
             imgColorRightEye = cv2.bitwise_and(imgRightEye, imgColorRightEye)
             imgColorLeftEye = cv2.GaussianBlur(imgColorLeftEye, (7, 7), 10)  # блюр
