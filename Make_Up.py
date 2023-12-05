@@ -100,11 +100,11 @@ def make_up_filter(make_up_lips, make_up_eyes, FILTER, COLORLIPS,COLOREYES, path
 
             #cv2.imshow('Lips', imgLeftEye)
         #итоговое изображение
-        cv2.imshow('Result picture',imgColor)
+        return imgColor
 
 
         #print(myPoints)
 
     #cv2.imshow("Original",imgOriginal)
-    cv2.waitKey(0)
+    #cv2.waitKey(0)
 #make_up_filter(True,False,False,[30,236,20],'facegirl.jpg')

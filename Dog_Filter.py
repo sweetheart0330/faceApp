@@ -25,6 +25,4 @@ def dog_filter(path):
     for (x, y, w, h) in fl:
         frame = put_dog_filter(dog, img, x, y, w, h)
 
-    cv2.imshow('Dog Filter',frame)
-    cv2.waitKey()
-    cv2.destroyAllWindows()
+    return frame

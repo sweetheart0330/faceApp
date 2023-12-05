@@ -31,7 +31,4 @@ def hat_filter(path):
     for (x, y, w, h) in fl:
         frame = put_hat(hat, img, x, y, w, h)
 
-    cv2.imshow('Hat filter',frame)
-    cv2.waitKey()
-    cv2.destroyAllWindows()
-    #cv2.imwrite('saved.jpg',frame)
+    return frame

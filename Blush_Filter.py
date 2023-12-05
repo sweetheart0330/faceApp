@@ -29,6 +29,4 @@ def blush_filter(path):
 
     for (x, y, w, h) in ey:
         frame=put_blush(blush, img, x, y, w, h)
-    cv2.imshow('Blush filter',frame)
-    cv2.waitKey()
-    cv2.destroyAllWindows()
+    return frame

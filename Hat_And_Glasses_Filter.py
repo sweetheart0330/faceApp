@@ -44,6 +44,4 @@ def hat_glas_filter(path):
         frame = put_hat(hat, img, x, y, w, h)
     for (x, y, w, h) in ey:
         frame=put_glass(glass,img, x, y, w, h)
-    cv2.imshow('Hat and glasses filter',frame)
-    cv2.waitKey()
-    cv2.destroyAllWindows()
+    return frame

@@ -28,6 +28,4 @@ def moust_filter(path):
 
     for (x, y, w, h) in ey:
         frame=put_moust(moust, img, x, y, w, h)
-    cv2.imshow('Moustache filter',frame)
-    cv2.waitKey()
-    cv2.destroyAllWindows()
+    return frame

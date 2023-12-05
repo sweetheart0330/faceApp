@@ -27,6 +27,4 @@ def glasses_filter(path):
 
     for (x, y, w, h) in ey:
         frame=put_glass(glass,img, x, y, w, h)
-    cv2.imshow('Glasses filter',frame)
-    cv2.waitKey()
-    cv2.destroyAllWindows()
+    return frame

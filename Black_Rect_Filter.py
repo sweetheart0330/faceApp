@@ -28,6 +28,7 @@ def brect_filter(path):
 
     for (x, y, w, h) in rc:
         frame=put_rect(rec, img, x, y, w, h)
-    cv2.imshow('Rectangle filter',frame)
-    cv2.waitKey()
-    cv2.destroyAllWindows()
+    #cv2.imshow('Rectangle filter',frame)
+    #cv2.waitKey()
+    #cv2.destroyAllWindows()
+    return frame

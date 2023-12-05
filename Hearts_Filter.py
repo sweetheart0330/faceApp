@@ -29,7 +29,4 @@ def hearts_filter(path):
     for (x, y, w, h) in fl:
         frame = put_heart(heart, img, x, y, w, h)
 
-    cv2.imshow('Hearts filter',frame)
-    cv2.waitKey()
-    cv2.destroyAllWindows()
-    #cv2.imwrite('saved.jpg',frame)
+    return frame
