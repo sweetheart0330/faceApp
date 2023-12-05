@@ -1,0 +1,6 @@
+.venv
+.idea
+design.ui
+__pychache__
+*.png
+*.jpg
