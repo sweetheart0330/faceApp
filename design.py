@@ -73,6 +73,9 @@ class Ui_MainWindow(object):
         self.imgPostProcess.setText("")
         self.imgPostProcess.setScaledContents(False)
         self.imgPostProcess.setObjectName("imgPostProcess")
+        self.buttonSave = QtWidgets.QPushButton(self.centralwidget)
+        self.buttonSave.setGeometry(QtCore.QRect(130, 210, 75, 23))
+        self.buttonSave.setObjectName("buttonSave")
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QtWidgets.QMenuBar(MainWindow)
         self.menubar.setGeometry(QtCore.QRect(0, 0, 941, 21))
@@ -95,6 +98,7 @@ class Ui_MainWindow(object):
         self.pickLipsColor.setText(_translate("MainWindow", "Выбрать цвет"))
         self.chbCheck.setText(_translate("MainWindow", "ЧБ"))
         self.buttonProcess.setText(_translate("MainWindow", "Обработать"))
+        self.buttonSave.setText(_translate("MainWindow", "Сохранить"))
 
 
 if __name__ == "__main__":
