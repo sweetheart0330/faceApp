@@ -1,11 +1,12 @@
 import sys
 import time
+from PyWinMouse import Mouse
 from PIL import Image
 from PIL import ImageDraw
 from design import *
 from PyQt5.QtGui import QPixmap
 from PyQt5.QtWidgets import (QApplication, QWidget, QMessageBox)
-from PyQt5.QtCore import Qt
+from PyQt5.QtCore import Qt, QPropertyAnimation, QRect, QTimer
 
 from Black_Rect_Filter import brect_filter
 from Blush_Filter import blush_filter
@@ -22,28 +23,46 @@ from Moustache_Filter import moust_filter
 class MyWin(QtWidgets.QMainWindow):
     def __init__(self, parent=None):
         QtWidgets.QWidget.__init__(self, parent)
-        self.eyesColor = None
-        self.path = None
-        self.imgPostProcess = None
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
         self.init_ui()
         self.eyeColor = None
         self.lipsColor = None
         self.picked_filter = None
+        self.eyesColor = None
+        self.path = None
+        self.imgPostProcess = None
+        self.whiteBlack = False
 
     def init_ui(self):
         self.ui.img.setAlignment(Qt.AlignCenter)
         self.ui.eyesColorShower.setAlignment(Qt.AlignCenter)
         self.ui.lipsColorShower.setAlignment(Qt.AlignCenter)
-        self.ui.comboBox.addItems(['', 'Цензура', 'Румянец', 'Дьявол', 'Собака', 'Очки', 'Шляпа', 'Шляпа и очки', 'Сердце', 'Мейкап', 'Moustache'])
+        self.ui.comboBox.addItems(['', 'Цензура', 'Румянец', 'Дьявол', 'Собака', 'Очки', 'Шляпа', 'Шляпа и очки',
+                                   'Сердце', 'Мейкап', 'Moustache', 'ЧБ'])
         self.ui.comboBox.activated[int].connect(self.checked)
         self.ui.importFile.clicked.connect(self.choice_file)
         self.ui.pickEyesColor.clicked.connect(self.eyes_color_click)
         self.ui.pickLipsColor.clicked.connect(self.lips_color_click)
         self.ui.buttonProcess.clicked.connect(self.process)
         self.ui.buttonSave.clicked.connect(self.saveProcess)
+        self.ui.eyesCheck.clicked.connect(self.eyesPickerVisible)
+        self.ui.lipsCheck.clicked.connect(self.lipsPickerVisible)
         self.ui.makeUp.setVisible(False)
+        self.ui.pickEyesColor.setVisible(False)
+        self.ui.pickLipsColor.setVisible(False)
+        self.ui.eyesColorShower.setVisible(False)
+        self.ui.lipsColorShower.setVisible(False)
+        self.ui.buttonProcess.setEnabled(False)
+        self.ui.buttonSave.setEnabled(False)
+
+    def eyesPickerVisible(self):
+        self.ui.pickEyesColor.setVisible(not self.ui.pickEyesColor.isVisible())
+        self.ui.eyesColorShower.setVisible(not self.ui.eyesColorShower.isVisible())
+
+    def lipsPickerVisible(self):
+        self.ui.pickLipsColor.setVisible(not self.ui.pickLipsColor.isVisible())
+        self.ui.lipsColorShower.setVisible(not self.ui.lipsColorShower.isVisible())
 
     def saveProcess(self):
         im = Image.fromarray(self.imgPostProcess)
@@ -57,16 +76,18 @@ class MyWin(QtWidgets.QMainWindow):
         if self.picked_filter is None:
             self.ui.imgPostProcess.setPixmap(QPixmap())
         elif self.picked_filter == make_up_filter:
-            if self.ui.lipsCheck.isChecked():
+            if self.ui.lipsColorShower.isVisible() and not self.whiteBlack:
                 lipsColorRgb = [self.lipsColor.blue(), self.lipsColor.green(), self.lipsColor.red()]
             else:
                 lipsColorRgb = [0, 0, 0]
-            if self.ui.eyesCheck.isChecked():
+            if self.ui.eyesColorShower.isVisible() and not self.whiteBlack:
                 eyesColorRgb = [self.eyesColor.blue(), self.eyesColor.green(), self.eyesColor.red()]
             else:
                 eyesColorRgb = [0, 0, 0]
-            self.imgPostProcess = self.picked_filter(self.ui.lipsCheck.isChecked(), self.ui.eyesCheck.isChecked(),
-                               self.ui.chbCheck.isChecked(), lipsColorRgb, eyesColorRgb, self.path)
+            print(self.ui.lipsColorShower.isVisible(), self.ui.eyesColorShower.isVisible())
+            self.imgPostProcess = self.picked_filter(self.ui.lipsColorShower.isVisible(),
+                                                     self.ui.eyesColorShower.isVisible(),
+                               self.whiteBlack, lipsColorRgb, eyesColorRgb, self.path)
         else:
             self.imgPostProcess = self.picked_filter(self.path)
         pixmap = self.pil2pixmap(self.imgPostProcess)
@@ -77,6 +98,23 @@ class MyWin(QtWidgets.QMainWindow):
         else:
             pixmap = pixmap.scaledToWidth(w)
         self.ui.imgPostProcess.setPixmap(pixmap)
+        self.ui.buttonSave.setEnabled(True)
+        #self.animate()
+
+    def animate(self):
+        x = self.ui.buttonProcess.x()
+        y = self.ui.buttonProcess.y()
+        new_y = y + 30
+        self.animation = QPropertyAnimation(self.ui.buttonSave, b"geometry")
+        self.animation.setDuration(1000)
+        self.animation.setStartValue(QRect(x, y, self.ui.buttonSave.width(), self.ui.buttonSave.height()))
+        self.animation.setEndValue(QRect(x+400, y-200, self.ui.buttonSave.width(), self.ui.buttonSave.height()))
+        self.animation.start()
+        '''new_y = y + self.ui.buttonProcess.width()
+        self.ui.buttonSave.setGeometry(x, y, self.ui.buttonSave.width(), self.ui.buttonSave.height())
+        self.ui.buttonSave.setVisible(True)
+        for i in range(100):
+            self.ui.buttonSave.setGeometry(x + i, y + i, self.ui.buttonSave.width(), self.ui.buttonSave.height())'''
 
     def pil2pixmap(self, image):
         '''if im.mode == "RGB":
@@ -111,6 +149,8 @@ class MyWin(QtWidgets.QMainWindow):
             pixmap = pixmap.scaledToWidth(w)
         #self.ui.img.setPixmap(pixmap)
         self.ui.img.setPixmap(pixmap)
+        if self.picked_filter:
+            self.ui.buttonProcess.setEnabled(True)
 
     def eyes_color_click(self):
         color = QtWidgets.QColorDialog.getColor()
@@ -134,6 +174,7 @@ class MyWin(QtWidgets.QMainWindow):
 
     def checked(self, item):
         self.ui.makeUp.setVisible(False)
+        self.whiteBlack = False
         if item == 0:
             self.picked_filter = None
         if item == 1:
@@ -157,6 +198,11 @@ class MyWin(QtWidgets.QMainWindow):
             self.ui.makeUp.setVisible(True)
         elif item == 10:
             self.picked_filter = moust_filter
+        elif item == 11:
+            self.picked_filter = make_up_filter
+            self.whiteBlack = True
+        if self.path:
+            self.ui.buttonProcess.setEnabled(True)
 
 
 app = QtWidgets.QApplication(sys.argv)
