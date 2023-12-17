@@ -7,6 +7,7 @@ from design import *
 from PyQt5.QtGui import QPixmap
 from PyQt5.QtWidgets import (QApplication, QWidget, QMessageBox)
 from PyQt5.QtCore import Qt, QPropertyAnimation, QRect, QTimer
+from screeninfo import get_monitors
 
 from Black_Rect_Filter import brect_filter
 from Blush_Filter import blush_filter
@@ -55,6 +56,14 @@ class MyWin(QtWidgets.QMainWindow):
         self.ui.lipsColorShower.setVisible(False)
         self.ui.buttonProcess.setEnabled(False)
         self.ui.buttonSave.setEnabled(False)
+        w, h = self.get_size_of_desktop()
+        #self.setGeometry(int(w / 2 - self.width() / 2), 1, self.width(), h-10)
+        self.setMinimumSize(self.width(), h)
+
+
+    def get_size_of_desktop(self):
+        desktop = QApplication.desktop()
+        return (desktop.width(), desktop.height())
 
     def eyesPickerVisible(self):
         self.ui.pickEyesColor.setVisible(not self.ui.pickEyesColor.isVisible())
