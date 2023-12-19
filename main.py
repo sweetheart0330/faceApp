@@ -58,7 +58,7 @@ class MyWin(QtWidgets.QMainWindow):
         self.ui.buttonSave.setEnabled(False)
         w, h = self.get_size_of_desktop()
         #self.setGeometry(int(w / 2 - self.width() / 2), 1, self.width(), h-10)
-        self.setMinimumSize(self.width(), h)
+        self.setMinimumSize(self.width(), (h//2))
 
 
     def get_size_of_desktop(self):

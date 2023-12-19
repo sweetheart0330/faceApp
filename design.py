@@ -161,12 +161,12 @@ class Ui_MainWindow(object):
                                      "background-color:  #FFAEDF;\n"
                                      "border-radius:11px;\n"
                                      "color: #3B1A70;\n"
-                                     "border-image : url(C:/Users/Kate/PycharmProjects/pythonProject7/faceApp/icons/Group 1.png);"
+                                     "border-image : url(icons/Group 1.png);"
                                      "}\n"
                                      "QPushButton:hover:!pressed{\n"
                                      "border-color:#C19BFF;\n"
                                      "border: 1px solid;\n"
-                                     "border-image:url(C:/Users/Kate/PycharmProjects/pythonProject7/faceApp/icons/Group 1 (1).png);\n"
+                                     "border-image:url(icons/Group 1 (1).png);\n"
                                      "}\n"
                                      "\n"
                                      "")
@@ -180,14 +180,14 @@ class Ui_MainWindow(object):
             "QPushButton{\n"
             "border:solid;\n"
             "background-color:  #FFAEDF;\n"
-            "border-image : url(C:/Users/Kate/PycharmProjects/pythonProject7/faceApp/icons/Group 2.png);"
+            "border-image : url(icons/Group 2.png);"
             "border-radius:11px;\n"
             "color: #3B1A70;\n"
             "}\n"
             "QPushButton:hover:!pressed{\n"
             "border-color:#C19BFF;\n"
             "border: solid;\n"
-            "border-image:url(C:/Users/Kate/PycharmProjects/pythonProject7/faceApp/icons/Group 2 (1).png);\n"
+            "border-image:url(icons/Group 2 (1).png);\n"
             "}\n"
             "\n"
             "\n"
@@ -298,7 +298,7 @@ class Ui_MainWindow(object):
         self.label_3 = QtWidgets.QLabel(self.centralwidget)
         self.label_3.setGeometry(QtCore.QRect(530, 300, 51, 31))
         self.label_3.setText("")
-        self.label_3.setPixmap(QtGui.QPixmap("D:\\Docs\\Desktop\\icons\\Group 10.png"))
+        self.label_3.setPixmap(QtGui.QPixmap("icons/Group 10.png"))
         self.label_3.setObjectName("label_3")
         self.label_4 = QtWidgets.QLabel(self.centralwidget)
         self.label_4.setGeometry(QtCore.QRect(610, 80, 71, 21))
